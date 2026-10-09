@@ -1,3 +1,4 @@
+const SITE = "https://midnight-shop.netlify.app";
 const clean = (s, n) => String(s || "").replace(/[@`]/g, "").trim().slice(0, n);
 const json = (code, obj) => ({ statusCode: code, headers: { "Content-Type": "application/json" }, body: JSON.stringify(obj) });
 
@@ -21,11 +22,16 @@ exports.handler = async (event) => {
 
   const id = "MS-" + Date.now().toString(36).toUpperCase();
   const body = {
+    username: "Midnight Shop",
+    avatar_url: SITE + "/logo.png",
     content: "@here Nova narudžbina!",
     allowed_mentions: { parse: ["everyone"] },
     embeds: [{
+      author: { name: "Midnight Shop", icon_url: SITE + "/logo.png", url: SITE },
       title: `Nova narudžbina ${id}`,
+      description: `**${o.product}** - ${o.plan}\nKupac: **${o.discord}**`,
       color: 0x2f6bff,
+      thumbnail: { url: SITE + "/logo.png" },
       fields: [
         { name: "Proizvod", value: o.product, inline: true },
         { name: "Paket", value: o.plan, inline: true },
@@ -34,7 +40,8 @@ exports.handler = async (event) => {
         { name: "Plaćanje", value: o.pay, inline: true },
         { name: "Napomena", value: o.note },
       ],
-      footer: { text: "Midnight Shop" },
+      image: { url: SITE + "/banner.gif" },
+      footer: { text: "Midnight Shop | Isporuka do 30 min", icon_url: SITE + "/logo.png" },
       timestamp: new Date().toISOString(),
     }],
   };
