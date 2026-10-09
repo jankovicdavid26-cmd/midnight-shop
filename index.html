@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Midnight Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04070f;--bg2:#08101f;--card:#0b1426;--line:#16284a;--blue:#2f6bff;--cyan:#38c8ff;--text:#e6eeff;--mute:#8a9bc0;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:radial-gradient(1200px 600px at 80% -10%,#0d2a66 0%,transparent 60%),var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;line-height:1.6;padding-left:14px}
+h1,h2,h3,.logo{font-family:Sora,system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+/* RGB rail */
+.rail{position:fixed;left:0;top:0;bottom:0;width:6px;z-index:50;background:linear-gradient(180deg,#0a2a8a,#2f6bff,#38c8ff,#2f6bff,#0a2a8a);background-size:100% 300%;animation:rgb 6s linear infinite;box-shadow:0 0 18px 2px rgba(80,140,255,.55)}
+@keyframes rgb{to{background-position:0 300%}}
+nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:22px;padding:14px max(20px,5vw);background:rgba(4,7,15,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:10px;margin-right:auto}
+.moon{width:22px;height:22px;border-radius:50%;box-shadow:inset -7px -3px 0 0 var(--cyan);transform:rotate(-20deg)}
+nav a.l{color:var(--mute);font-size:.92rem}nav a.l:hover{color:var(--text)}
+.btn{display:inline-block;padding:11px 20px;border-radius:10px;background:linear-gradient(135deg,var(--blue),#1a46c9);font-weight:700;font-size:.92rem;border:1px solid #4d82ff;box-shadow:0 6px 24px rgba(47,107,255,.35);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:transparent;border-color:var(--line);box-shadow:none}
+.cur{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.cur button{background:none;border:0;color:var(--mute);padding:7px 11px;font:700 .8rem Manrope;cursor:pointer}
+.cur button.on{background:var(--blue);color:#fff}
+section{padding:80px max(20px,5vw)}
+.wrap{max-width:1180px;margin:auto}
+/* hero */
+.hero{padding-top:90px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 14px;border:1px solid var(--line);border-radius:99px;color:var(--cyan);font-size:.85rem;background:rgba(47,107,255,.08)}
+.dot{width:8px;height:8px;border-radius:50%;background:#38c8ff;box-shadow:0 0 10px #38c8ff;animation:p 1.8s infinite}
+@keyframes p{50%{opacity:.35}}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;font-weight:800;margin:22px 0 18px;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mute);font-size:1.08rem;max-width:520px}
+.cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.stats{display:flex;gap:34px;margin-top:40px;flex-wrap:wrap}
+.stats b{display:block;font:800 1.6rem Sora}.stats small{color:var(--mute)}
+.orb{aspect-ratio:1;border-radius:50%;position:relative;max-width:420px;margin:auto;width:100%;background:radial-gradient(circle at 70% 30%,#1b4fd8 0%,#0a1b45 45%,#04070f 72%);box-shadow:0 0 90px rgba(47,107,255,.4),inset 0 0 60px rgba(56,200,255,.15);animation:fl 7s ease-in-out infinite}
+.orb:before{content:"";position:absolute;inset:14% 28% 14% 8%;border-radius:50%;box-shadow:inset 26px 0 0 0 rgba(230,238,255,.92);transform:rotate(-12deg)}
+.chip{position:absolute;background:var(--card);border:1px solid var(--line);padding:9px 14px;border-radius:12px;font-size:.82rem;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.c1{top:8%;right:-4%}.c2{bottom:18%;left:-8%}.c3{bottom:2%;right:6%}
+@keyframes fl{50%{transform:translateY(-12px)}}
+/* shop */
+h2{font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.01em}
+.lead{color:var(--mute);margin:8px 0 28px;max-width:620px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.tabs button{padding:9px 18px;border-radius:99px;border:1px solid var(--line);background:var(--bg2);color:var(--mute);font:600 .9rem Manrope;cursor:pointer}
+.tabs button.on{background:var(--blue);color:#fff;border-color:#4d82ff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:12px;position:relative;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--blue);transform:translateY(-4px)}
+.card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.5rem;background:rgba(47,107,255,.14);border:1px solid var(--line)}
+.card h3{font-size:1.1rem}.card p{color:var(--mute);font-size:.88rem}
+.tag{position:absolute;top:16px;right:16px;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(47,107,255,.18);color:#7fb0ff}
+.tag.hot{background:rgba(56,200,255,.16);color:#38c8ff}
+.plans{display:flex;flex-direction:column;gap:7px;margin-top:auto}
+.plan{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid #122040;font-size:.88rem}
+.plan b{color:var(--cyan);font-family:Sora}
+.buy{text-align:center;padding:10px;border-radius:10px;background:rgba(47,107,255,.16);border:1px solid #27479a;font-weight:700;font-size:.9rem}
+.buy:hover{background:var(--blue)}
+/* steps/features */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;counter-reset:s}
+.step{border-left:2px solid var(--blue);padding:4px 0 4px 18px;counter-increment:s}
+.step:before{content:counter(s);font:800 2rem Sora;color:var(--blue)}
+.step h3{font-size:1rem;margin:2px 0 4px}.step p{color:var(--mute);font-size:.9rem}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.feat div{padding:20px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+.feat h3{font-size:1rem;margin-bottom:6px}.feat p{color:var(--mute);font-size:.88rem}
+.rev{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.rev blockquote{padding:20px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:.92rem}
+.rev cite{display:block;margin-top:12px;color:var(--mute);font-size:.82rem;font-style:normal}
+.st{color:#38c8ff;letter-spacing:2px}
+details{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700}details p{color:var(--mute);margin-top:10px;font-size:.92rem}
+.disc{margin:0 max(20px,5vw);border-radius:24px;padding:60px 30px;text-align:center;border:1px solid #27479a;background:radial-gradient(600px 300px at 50% 0,rgba(47,107,255,.35),transparent),var(--card)}
+.disc p{color:var(--mute);margin:10px auto 26px;max-width:520px}
+footer{padding:40px max(20px,5vw);color:var(--mute);font-size:.85rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);margin-top:70px}
+/* premium */
+.deco{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.deco:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(47,107,255,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(47,107,255,.08) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 0,#000,transparent 75%);mask-image:radial-gradient(ellipse at 50% 0,#000,transparent 75%)}
+.deco i{position:absolute;border-radius:50%;filter:blur(90px)}
+.b1{width:520px;height:520px;right:-120px;top:-100px;background:#1b4fd8;opacity:.35}
+.b2{width:460px;height:460px;left:-160px;bottom:-120px;background:#38c8ff;opacity:.14}
+.b3{width:340px;height:340px;left:45%;top:40%;background:#4d2fff;opacity:.12}
+.stars{position:absolute;top:0;left:0;width:2px;height:2px;border-radius:50%;box-shadow:12vw 20vh #9cc4ff,24vw 8vh #fff,36vw 34vh #6fa2ff,48vw 14vh #fff,61vw 28vh #9cc4ff,73vw 10vh #fff,86vw 24vh #6fa2ff,94vw 42vh #fff,8vw 58vh #6fa2ff,19vw 76vh #fff,33vw 64vh #9cc4ff,52vw 82vh #fff,68vw 70vh #6fa2ff,81vw 88vh #9cc4ff,92vw 66vh #fff;animation:tw 5s ease-in-out infinite}
+@keyframes tw{50%{opacity:.25}}
+@keyframes sh{to{background-position:-200% 0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes mq{to{transform:translateX(-50%)}}
+.logo{background:linear-gradient(90deg,#fff,#7fb0ff,#38c8ff,#fff);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sh 6s linear infinite}
+h2:after{content:"";display:block;width:56px;height:3px;margin-top:12px;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 14px var(--blue)}
+.orb:after{content:"";position:absolute;inset:-9%;border-radius:50%;border:1px dashed rgba(56,200,255,.4);animation:spin 40s linear infinite}
+.btn{position:relative;overflow:hidden}
+.card{background:linear-gradient(180deg,rgba(14,26,52,.88),rgba(6,12,26,.92));backdrop-filter:blur(6px);box-shadow:0 20px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(120,170,255,.12)}
+.card:before{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;background:linear-gradient(160deg,rgba(80,150,255,.75),transparent 40%,rgba(56,200,255,.4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.card:hover{box-shadow:0 24px 60px rgba(47,107,255,.28),inset 0 1px 0 rgba(120,170,255,.2)}
+.marq{overflow:hidden;border-block:1px solid var(--line);background:rgba(8,16,31,.7)}
+.marq div{display:flex;gap:44px;width:max-content;padding:14px 0;animation:mq 30s linear infinite;color:var(--mute);font-weight:700;font-size:.9rem;white-space:nowrap}
+.marq b{color:var(--cyan);font-weight:700}
+.pay{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.pcard{position:relative;padding:28px;border-radius:18px;background:linear-gradient(160deg,rgba(18,36,74,.9),rgba(6,12,26,.95));border:1px solid #27479a;box-shadow:0 0 50px rgba(47,107,255,.15)}
+.pcard .pl{font:800 1.9rem Sora;margin-bottom:6px}.pcard .pl b{color:#7fb0ff}.pcard .pl i{color:var(--cyan);font-style:normal}
+.pcard h3{font-size:1.15rem;margin-bottom:6px}.pcard p{color:var(--mute);font-size:.92rem}
+.pcard ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:6px;font-size:.88rem}
+.pcard li:before{content:"\2713";color:var(--cyan);margin-right:10px;font-weight:800}
+.note{margin-top:20px;padding:14px 18px;border-radius:12px;border:1px dashed #27479a;color:var(--mute);font-size:.9rem;background:rgba(47,107,255,.06)}
+.disc{position:relative;overflow:hidden;box-shadow:0 0 90px rgba(47,107,255,.25)}
+.disc h2:after{margin:12px auto 0}
+.dchips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.dchips span{padding:8px 15px;border:1px solid #27479a;border-radius:99px;background:rgba(47,107,255,.12);font-size:.85rem}
+.buy{display:block;width:100%;color:inherit;font:700 .9rem Manrope;cursor:pointer}
+dialog{margin:auto;width:min(480px,92vw);border:1px solid #27479a;border-radius:20px;background:linear-gradient(160deg,#0f1f43,#050a16);color:var(--text);padding:28px;box-shadow:0 0 80px rgba(47,107,255,.35)}
+dialog::backdrop{background:rgba(2,4,10,.75);backdrop-filter:blur(4px)}
+dialog h3{font-size:1.3rem;margin-bottom:4px}
+.of label{display:block;font-size:.85rem;color:var(--mute);margin:14px 0 6px}
+.of input,.of select,.of textarea{width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--line);background:#060d1c;color:var(--text);font:500 .95rem Manrope}
+.of .btn{width:100%;margin-top:18px;cursor:pointer;color:#fff;font:700 .95rem Manrope}
+.hp{position:absolute;left:-9999px}
+.omsg{display:none;margin-top:14px;font-size:.9rem;padding:12px;border-radius:10px}
+.omsg.ok{display:block;background:rgba(56,200,255,.12);border:1px solid #38c8ff}
+.omsg.err{display:block;background:rgba(47,107,255,.12);border:1px solid #4d82ff}
+#oclose{position:absolute;top:14px;right:16px;background:none;border:0;color:var(--mute);font-size:1.5rem;cursor:pointer}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.orb{max-width:300px}nav a.l{display:none}.c1{right:0}.c2{left:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="rail" aria-hidden="true"></div>
+<div class="deco" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><span class="stars"></span></div>
+<nav>
+  <a class="logo" href="#"><span class="moon"></span>Midnight Shop</a>
+  <a class="l" href="#shop">Prodavnica</a><a class="l" href="#kako">Kako kupiti</a><a class="l" href="#placanje">Plaćanje</a><a class="l" href="#zasto">Zašto mi</a><a class="l" href="#faq">FAQ</a><a class="l" href="#discord">Naš Discord</a>
+  <div class="cur" role="group" aria-label="Valuta"><button class="on" data-c="EUR">€</button><button data-c="RSD">RSD</button></div>
+  <a class="btn" href="https://discord.gg/midshop" target="_blank" rel="noopener">Naš Discord</a>
+</nav>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="pill"><i class="dot"></i> Online 24/7 · isporuka do 30 min</span>
+    <h1>Digitalne usluge po cenama kad <span>padne noć.</span></h1>
+    <p class="sub">Discord Nitro, boostovi, Netflix, Spotify, ChatGPT i još mnogo toga na jednom mestu. Brza isporuka, jasne cene i podrška koja odgovara.</p>
+    <div class="cta"><a class="btn" href="#shop">Pogledaj ponudu</a><a class="btn ghost" href="https://discord.gg/midshop" target="_blank" rel="noopener">discord.gg/midshop</a></div>
+    <div class="stats"><div><b data-n="170">0</b><small>zadovoljnih kupaca</small></div><div><b data-n="200">0</b><small>isporučenih porudžbina</small></div><div><b>do 30 min</b><small>prosečna isporuka</small></div></div>
+  </div>
+  <div class="orb" aria-hidden="true"><span class="chip c1">✔ Nitro isporučen</span><span class="chip c2">🎵 Spotify Premium</span><span class="chip c3">⚡ Boost x14</span></div>
+</div></section>
+
+<div class="marq" aria-hidden="true"><div><span><b>◆</b> Discord Nitro</span><span><b>◆</b> Server boosts</span><span><b>◆</b> Netflix</span><span><b>◆</b> Spotify</span><span><b>◆</b> YouTube Premium</span><span><b>◆</b> ChatGPT Plus</span><span><b>◆</b> Gemini AI</span><span><b>◆</b> CapCut Pro</span><span><b>◆</b> Custom botovi</span><span><b>◆</b> PayPal i banka</span><span><b>◆</b> Discord Nitro</span><span><b>◆</b> Server boosts</span><span><b>◆</b> Netflix</span><span><b>◆</b> Spotify</span><span><b>◆</b> YouTube Premium</span><span><b>◆</b> ChatGPT Plus</span><span><b>◆</b> Gemini AI</span><span><b>◆</b> CapCut Pro</span><span><b>◆</b> Custom botovi</span><span><b>◆</b> PayPal i banka</span></div></div>
+<section id="shop"><div class="wrap">
+  <h2>Prodavnica</h2>
+  <p class="lead">Iste kategorije kao na našem Discord serveru. Izaberi uslugu, otvori ticket i dobijaš je u par minuta.</p>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="kako" style="background:var(--bg2)"><div class="wrap">
+  <h2>Kako kupiti</h2>
+  <p class="lead">Četiri koraka, bez registracije i bez komplikacija.</p>
+  <div class="steps">
+    <div class="step"><h3>Izaberi uslugu</h3><p>Klikni na Naruči kod proizvoda i popuni kratku formu.</p></div>
+    <div class="step"><h3>Stiže nam ticket</h3><p>Narudžbina odmah stiže na naš Discord, a mi ti se javljamo.</p></div>
+    <div class="step"><h3>Plati</h3><p>Plaćaš preko PayPal-a ili bankovnim prenosom, detalje dobijaš u tiketu.</p></div>
+    <div class="step"><h3>Primi uslugu</h3><p>Isporuka obično traje do 30 minuta, a često i manje.</p></div>
+  </div>
+</div></section>
+
+<section id="placanje"><div class="wrap">
+  <h2>Načini plaćanja</h2>
+  <p class="lead">Dva proverena načina plaćanja. Tačne podatke za uplatu dobijaš u tiketu na našem Discordu.</p>
+  <div class="pay">
+    <div class="pcard"><div class="pl"><b>Pay</b><i>Pal</i></div><h3>PayPal</h3><p>Brza uplata u evrima sa zaštitom kupca. Uslugu aktiviramo čim uplata stigne.</p><ul><li>Potvrda uplate u par minuta</li><li>Zaštita kupca</li><li>Plaćanje u evrima</li></ul></div>
+    <div class="pcard"><div class="pl">🏦</div><h3>Bankovni prenos</h3><p>Uplata na račun preko e-banking ili mobilne aplikacije vaše banke.</p><ul><li>Plaćanje u dinarima ili evrima</li><li>Potvrda uz dokaz o uplati</li><li>Bez dodatnih provizija sa naše strane</li></ul></div>
+  </div>
+  <div class="note">🔒 Podatke za uplatu šaljemo samo u tiketu na zvaničnom serveru discord.gg/midshop. Ne veruj porukama od drugih ljudi u privatnim porukama.</div>
+</div></section>
+
+<section id="zasto"><div class="wrap">
+  <h2>Zašto Midnight Shop</h2>
+  <p class="lead">Mala ekipa, jasna pravila i kupci koji se vraćaju.</p>
+  <div class="feat">
+    <div><h3>⚡ Brza isporuka</h3><p>Prosečna isporuka je do 30 minuta, tokom celog dana i noći.</p></div>
+    <div><h3>🛡️ Garancija</h3><p>Ako nalog ili usluga prestane da radi tokom perioda garancije, menjamo ga besplatno.</p></div>
+    <div><h3>💬 Podrška uživo</h3><p>Tim odgovara u tiketima i na serveru, bez botova koji kruže u krug.</p></div>
+    <div><h3>💸 Fer cene</h3><p>Popusti za veće količine, a povremeno i giveaway-evi i kodovi za članove.</p></div>
+    <div><h3>🔒 Bezbedno</h3><p>Ne tražimo lozinke od tvog glavnog naloga. Sve ide preko zvaničnih metoda.</p></div>
+    <div><h3>🎁 Bonusi</h3><p>Stalni kupci dobijaju posebnu rolu, rani pristup akcijama i dodatne popuste.</p></div>
+  </div>
+</div></section>
+
+<section style="background:var(--bg2)"><div class="wrap">
+  <h2>Šta kažu kupci</h2><p class="lead">Utisci sa našeg servera.</p>
+  <div class="rev">
+    <blockquote><span class="st">★★★★★</span><br>Nitro stigao za manje od 30 minuta, sve ok. Preporuka!<cite>— Marko, kupac Nitro</cite></blockquote>
+    <blockquote><span class="st">★★★★★</span><br>Spotify radi već treći mesec bez ikakvih problema.<cite>— Jovana, kupac Spotify</cite></blockquote>
+    <blockquote><span class="st">★★★★★</span><br>Custom bot baš onako kako sam tražio, i brza izrada.<cite>— Nikola, vlasnik servera</cite></blockquote>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Česta pitanja</h2><p class="lead">Ako nešto nije jasno, pitaj nas na Discordu.</p>
+  <details><summary>Koliko traje isporuka?</summary><p>Najčešće do 30 minuta. Za custom botove i veće projekte dogovaramo rok u tiketu.</p></details>
+  <details><summary>Kako mogu da platim?</summary><p>Prihvatamo PayPal i bankovni prenos. Tačne podatke za uplatu dobijaš u tiketu.</p></details>
+  <details><summary>Šta ako nešto ne radi?</summary><p>Otvori tiket sa brojem porudžbine. U okviru garancije rešavamo problem ili menjamo uslugu.</p></details>
+  <details><summary>Da li su usluge legalne i bezbedne?</summary><p>Radimo preko metoda koje su opisane uz svaki proizvod. Nikada ne tražimo tvoju lozinku za glavni nalog.</p></details>
+  <details><summary>Imate li popuste za veće količine?</summary><p>Da. Za 3 i više proizvoda ili za preprodavce, javi se u tiket za ponudu.</p></details>
+</div></section>
+
+<div class="disc" id="discord">
+  <h2>Naš Discord</h2>
+  <p>Tu su sve ponude, akcije, giveaway-evi i podrška. Jedan klik do servera.</p>
+  <div class="dchips"><span>🟢 Online 24/7</span><span>🎫 Ticket podrška</span><span>🎁 Giveaway-evi</span><span>📣 Akcije i popusti</span><span>💎 Role za stalne kupce</span></div>
+  <a class="btn" href="https://discord.gg/midshop" target="_blank" rel="noopener">discord.gg/midshop</a>
+</div>
+
+<footer><span>© 2026 Midnight Shop. Sva prava zadržana. Plaćanje: PayPal i banka. <a href="https://discord.gg/midshop" target="_blank" rel="noopener" style="color:var(--cyan)">Naš Discord</a></span><span>Midnight Shop nije povezan sa Discord, Netflix, Spotify, Google, OpenAI i drugim pomenutim brendovima.</span></footer>
+
+<dialog id="dlg"><button id="oclose" type="button" aria-label="Zatvori">×</button>
+<h3 id="otitle"></h3><p style="color:var(--mute);font-size:.9rem">Popuni formu i narudžbina stiže našem timu na Discord kao ticket.</p>
+<form id="of" class="of"><label for="oplan">Paket</label><select id="oplan" name="plan"></select>
+<label for="od">Tvoj Discord korisnik</label><input id="od" name="discord" required maxlength="40" placeholder="npr. midnight_user" autocomplete="off">
+<label for="op">Način plaćanja</label><select id="op" name="pay"><option>PayPal</option><option>Bankovni prenos</option></select>
+<label for="on">Napomena (nije obavezno)</label><textarea id="on" name="note" rows="2" maxlength="300"></textarea>
+<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button class="btn" type="submit">Pošalji narudžbinu</button></form>
+<div id="omsg" class="omsg" role="status"></div></dialog>
+<script>
+const RATE=117;let cur="EUR";
+const D=[
+{c:"Discord usluge",i:"💎",n:"Discord Nitro",d:"Pun Nitro sa boost-ovima, većim uploadom i animiranim emoji-jima.",t:"hot",p:[["1 mesec",8],["3 meseca",21],["12 meseci",70]]},
+{c:"Discord usluge",i:"🚀",n:"Server boosts",d:"14 boostova za tvoj server, otključaj nivoe 2 i 3.",p:[["14x / 1 mesec",4],["14x / 3 meseca",10],["14x / 12 meseci",30]]},
+{c:"Discord usluge",i:"🎨",n:"Dekoracije",d:"Dekoracije avatara i profil efekti za tvoj nalog.",p:[["1 dekoracija",3],["3 dekoracije",8]]},
+{c:"Discord usluge",i:"👥",n:"Članovi",d:"Dodatni članovi za tvoj server, postepena isporuka.",p:[["100 članova",2],["500 članova",8],["1000 članova",14]]},
+{c:"Discord usluge",i:"🤖",n:"Custom bot",d:"Bot po tvojoj meri: moderacija, tiketi, muzika, ekonomija.",p:[["Osnovni",10],["Napredni",25],["Premium",50]]},
+{c:"Streaming",i:"🎬",n:"Netflix",d:"Premium nalog sa 4K, sopstveni profil.",t:"hot",p:[["1 mesec",4],["3 meseca",10],["6 meseci",18]]},
+{c:"Streaming",i:"🎵",n:"Spotify Premium",d:"Bez reklama, offline slušanje, neograničeno preskakanje.",p:[["1 mesec",3],["3 meseca",8],["12 meseci",25]]},
+{c:"Streaming",i:"▶️",n:"YouTube Premium",d:"Bez reklama, pozadinsko puštanje i YouTube Music.",p:[["1 mesec",3],["3 meseca",8],["12 meseci",26]]},
+{c:"Streaming",i:"🏰",n:"Disney+",d:"Filmovi i serije Disney, Marvel, Star Wars i Pixar.",p:[["1 mesec",3],["6 meseci",15]]},
+{c:"Streaming",i:"🎧",n:"Deezer Premium",d:"Hi-Fi zvuk i offline muzika.",p:[["1 mesec",3],["6 meseci",14]]},
+{c:"Streaming",i:"🎮",n:"Random games",d:"Nasumični ključevi za igre, iznenađenje u svakom paketu.",t:"new",p:[["1 igra",2],["5 igara",8],["10 igara",14]]},
+{c:"Ostalo",i:"🧠",n:"ChatGPT Plus",d:"Pristup najnovijim modelima, brži odgovori i veći limiti.",t:"hot",p:[["1 mesec",12],["3 meseca",32]]},
+{c:"Ostalo",i:"✨",n:"Gemini AI",d:"Gemini Advanced sa dugim kontekstom i Google alatima.",p:[["1 mesec",10],["3 meseca",27]]},
+{c:"Ostalo",i:"✂️",n:"CapCut Pro",d:"Bez vodenog žiga, svi efekti i šabloni za editovanje.",p:[["1 mesec",4],["12 meseci",30]]},
+{c:"Ostalo",i:"🎞️",n:"Filmora",d:"Video editor sa AI alatima i punim bibliotekama efekata.",p:[["1 mesec",5],["Doživotno",25]]}
+];
+const cats=["Sve",...new Set(D.map(x=>x.c))];let act="Sve";
+const fmt=v=>cur==="EUR"?"€"+v:Math.round(v*RATE/10)*10+" RSD";
+function render(){
+  document.getElementById("tabs").innerHTML=cats.map(c=>`<button class="${c===act?"on":""}" data-t="${c}">${c}</button>`).join("");
+  document.getElementById("grid").innerHTML=D.filter(x=>act==="Sve"||x.c===act).map(x=>`
+  <article class="card">${x.t?`<span class="tag ${x.t==="hot"?"hot":""}">${x.t==="hot"?"Popularno":"Novo"}</span>`:""}
+  <div class="ic">${x.i}</div><h3>${x.n}</h3><p>${x.d}</p>
+  <div class="plans">${x.p.map(p=>`<div class="plan"><span>${p[0]}</span><b>${fmt(p[1])}</b></div>`).join("")}</div>
+  <button class="buy" type="button" data-o="${D.indexOf(x)}">Naruči</button></article>`).join("");
+}
+document.getElementById("tabs").addEventListener("click",e=>{const t=e.target.dataset.t;if(t){act=t;render()}});
+document.querySelector(".cur").addEventListener("click",e=>{const c=e.target.dataset.c;if(!c)return;cur=c;document.querySelectorAll(".cur button").forEach(b=>b.classList.toggle("on",b.dataset.c===c));render()});
+render();
+document.querySelectorAll("[data-n]").forEach(el=>{const to=+el.dataset.n;let n=0;const s=Math.ceil(to/60);const t=setInterval(()=>{n=Math.min(to,n+s);el.textContent=n.toLocaleString("sr")+"+";if(n>=to)clearInterval(t)},25)});
+const ORDER_ENDPOINT="/.netlify/functions/order";
+const dlg=document.getElementById("dlg"),of=document.getElementById("of"),omsg=document.getElementById("omsg");let oi=0;
+document.getElementById("grid").addEventListener("click",e=>{const b=e.target.closest(".buy");if(!b)return;oi=+b.dataset.o;const x=D[oi];document.getElementById("otitle").textContent=x.n;document.getElementById("oplan").innerHTML=x.p.map((p,i)=>`<option value="${i}">${p[0]} - ${fmt(p[1])}</option>`).join("");omsg.className="omsg";omsg.textContent="";of.hidden=false;dlg.showModal()});
+document.getElementById("oclose").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+of.addEventListener("submit",async e=>{e.preventDefault();const x=D[oi],p=x.p[+of.plan.value],btn=of.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="Slanje...";
+try{const r=await fetch(ORDER_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({product:x.n,plan:p[0],price:p[1]+" EUR ("+Math.round(p[1]*RATE/10)*10+" RSD)",discord:of.discord.value,pay:of.pay.value,note:of.note.value,website:of.website.value})});const j=await r.json();if(!r.ok||!j.ok)throw 0;of.hidden=true;omsg.className="omsg ok";omsg.textContent="Narudžbina poslata! Broj: "+j.id+". Uskoro ti se javljamo na Discordu. Ako još nisi na serveru, uđi na discord.gg/midshop."}
+catch(_){omsg.className="omsg err";omsg.textContent="Slanje nije uspelo. Otvori ticket direktno na discord.gg/midshop i napiši šta želiš."}
+btn.disabled=false;btn.textContent="Pošalji narudžbinu"});
+</script>
+</body>
+</html>
